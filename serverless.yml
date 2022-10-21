@@ -1,0 +1,29 @@
+# @format
+
+service: token
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  postToken:
+    handler: src/handlers/token.postToken
+    events:
+      - httpApi: POST /tokens
+
+  getToken:
+    handler: src/handlers/token.getToken
+    events:
+      - httpApi: GET /tokens/{pk_Key}
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
